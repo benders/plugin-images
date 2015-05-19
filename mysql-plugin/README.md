@@ -1,12 +1,13 @@
 # The New Relic MySQL Plugin
 
-This is the New Relic Plugin for monitoring MySQL databases. It is the same one that can be found in the Plugin Central at https://rpm.newrelic.com/accounts/1/plugins/directory/52
+This is the New Relic Plugin for monitoring MySQL databases. It is the same one that can be found in Plugin Central at [https://rpm.newrelic.com/accounts/1/plugins/directory/52](https://rpm.newrelic.com/accounts/1/plugins/directory/52)
 
 # How to use this image
 
 In order to function, the plugin needs a few environment variables set:
 
 * `NEW_RELIC_LICENSE_KEY`
+* `PLUGIN_NAME`
 * `PLUGIN_HOST`
 * `PLUGIN_USER`
 * `PLUGIN_PASSWD`
