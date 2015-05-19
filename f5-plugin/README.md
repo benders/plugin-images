@@ -1,6 +1,6 @@
 # The New Relic F5 Plugin
 
-This is the New Relic Plugin for monitoring F5 Load Balancers. It is the same one that can be found in Plugin Central.
+This is the New Relic Plugin for monitoring F5 Load Balancers. It is the same one that can be found in [Plugin Central](https://rpm.newrelic.com/plugins).
 
 # How to use this image
 

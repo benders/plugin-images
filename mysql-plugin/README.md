@@ -1,6 +1,6 @@
 # The New Relic MySQL Plugin
 
-This is the New Relic Plugin for monitoring MySQL databases. It is the same one that can be found in Plugin Central at [https://rpm.newrelic.com/accounts/1/plugins/directory/52](https://rpm.newrelic.com/accounts/1/plugins/directory/52)
+This is the New Relic Plugin for monitoring MySQL databases. It is the same one that can be found in [Plugin Central](https://rpm.newrelic.com/plugins).
 
 # How to use this image
 
