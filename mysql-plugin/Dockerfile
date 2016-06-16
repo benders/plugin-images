@@ -1,4 +1,4 @@
-FROM java:8-jre
+FROM java:8-jre-alpine
 MAINTAINER New Relic <support@newrelic.com>
 
 ENV PLUGIN_VERSION=newrelic_mysql_plugin-2.0.0
