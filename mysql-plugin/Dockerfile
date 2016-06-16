@@ -9,7 +9,7 @@ RUN mkdir -p /usr/src/myapp/ && tar -C /usr/src/myapp/ -xzf /tmp/${PLUGIN_VERSIO
 ADD configure-and-run-mysql-plugin /usr/src/myapp/${PLUGIN_VERSION}/
 WORKDIR /usr/src/myapp/${PLUGIN_VERSION}
 
-ENV NEWRELIC_LICENSE_KEY="" NEWRELIC_LOG_LEVEL="info"
+ENV NEW_RELIC_LICENSE_KEY="" NEW_RELIC_LOG_LEVEL="info"
 ENV AGENT_NAME="" AGENT_HOST="" AGENT_USER="" AGENT_PASSWD="" AGENT_METRICS="status,newrelic"
 
 CMD ["./configure-and-run-mysql-plugin"]

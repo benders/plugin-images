@@ -10,7 +10,7 @@ AGENT_NAME=${AGENT_NAME:-"MySQL ${AGENT_HOST}"}
 # First, check all the mandatory environment variables
 #
 for variable in \
-  NEWRELIC_LICENSE_KEY NEWRELIC_LOG_LEVEL \
+  NEW_RELIC_LICENSE_KEY NEW_RELIC_LOG_LEVEL \
   AGENT_HOST AGENT_USER
 do
   eval target=\$$variable
@@ -33,16 +33,16 @@ mkdir -p "$root_dir/config/"
 #
 cat > "$root_dir/config/newrelic.json" <<END_JSON
 {
-  "license_key": "${NEWRELIC_LICENSE_KEY}",
+  "license_key": "${NEW_RELIC_LICENSE_KEY}",
 END_JSON
 
 # Changing the endpoint is used internally at New Relic for development and testing
-[ -z "${NEWRELIC_ENDPOINT}" ] || cat >> "$root_dir/config/newrelic.json" <<END_JSON
-  "endpoint": "${NEWRELIC_ENDPOINT}",
+[ -z "${NEW_RELIC_ENDPOINT}" ] || cat >> "$root_dir/config/newrelic.json" <<END_JSON
+  "endpoint": "${NEW_RELIC_ENDPOINT}",
 END_JSON
 
 cat >> "$root_dir/config/newrelic.json" <<END_JSON
-  "log_level": "${NEWRELIC_LOG_LEVEL}",
+  "log_level": "${NEW_RELIC_LOG_LEVEL}",
   "log_file_name": "null",
   "log_file_path": "/dev"
 }

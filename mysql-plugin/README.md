@@ -6,14 +6,14 @@ This is the New Relic Plugin for monitoring MySQL databases. It is the same one 
 
 In order to function, the plugin needs a few environment variables set:
 
-* `NEWRELIC_LICENSE_KEY`
+* `NEW_RELIC_LICENSE_KEY`
 * `AGENT_HOST`
 * `AGENT_USER`
 * `AGENT_PASSWD`
 
 Optionally, you can also set:
 
-* `NEWRELIC_LOG_LEVEL`
+* `NEW_RELIC_LOG_LEVEL`
 * `AGENT_NAME`
 * `AGENT_METRICS` (see [metric.category.json](https://github.com/newrelic-platform/newrelic_mysql_java_plugin/blob/master/config/metric.category.json) for details)
 
@@ -21,7 +21,7 @@ Optionally, you can also set:
 
 ```shell
 $ docker run -d \
-  -e NEWRELIC_LICENSE_KEY=foobarbaz \
+  -e NEW_RELIC_LICENSE_KEY=foobarbaz \
   -e AGENT_HOST=your-db-host \
   -e AGENT_USER=newrelic \
   -e AGENT_PASSWD=SuPeRsEcUrE \
