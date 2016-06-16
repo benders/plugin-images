@@ -31,18 +31,34 @@ mkdir -p "$root_dir/config/"
 #
 # and write the newrelic.json
 #
-cat > "$root_dir/config/newrelic.json" <<END_JSON
-{
-  "license_key": "${NEW_RELIC_LICENSE_KEY}",
-END_JSON
+echo '{' > "$root_dir/config/newrelic.json"
 
-# Changing the endpoint is used internally at New Relic for development and testing
-[ -z "${NEW_RELIC_ENDPOINT}" ] || cat >> "$root_dir/config/newrelic.json" <<END_JSON
-  "endpoint": "${NEW_RELIC_ENDPOINT}",
+#
+# Any variable that starts with NEW_RELIC_ is placed in the newrelic.json
+# after the prefix is removed.
+for variable in $(env | egrep ^NEW_RELIC_ | cut -f1 -d\=); do
+  eval value=\$$variable
+  eval key=$(echo $variable | cut -f3- -d\_ | tr A-Z a-z)
+  cat >> "$root_dir/config/newrelic.json" <<END_JSON
+  "${key}": "${value}",
 END_JSON
+done
 
+# Proxy configuration
+# PROXY_HOST - The proxy host (e.g. webcache.example.com)
+# PROXY_PORT - The proxy port (e.g. 8080). Defaults to 80 if a proxy_host is set
+# PROXY_USERNAME - The proxy username
+# PROXY_PASSWORD - The proxy password
+for variable in $(env | egrep ^PROXY_ | cut -f1 -d\=); do
+  eval value=\$$variable
+  eval key=$(echo $variable | tr A-Z a-z)
+  cat >> "$root_dir/config/newrelic.json" <<END_JSON
+  "${key}": "${value}",
+END_JSON
+done
+
+# Write logs to /dev/null and close the config file
 cat >> "$root_dir/config/newrelic.json" <<END_JSON
-  "log_level": "${NEW_RELIC_LOG_LEVEL}",
   "log_file_name": "null",
   "log_file_path": "/dev"
 }
