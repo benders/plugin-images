@@ -4,7 +4,7 @@ root_dir=$(dirname $BASH_SOURCE[0])
 will_exit=0
 
 # Default the reported name based on monitored hostname
-AGENT_NAME=${AGENT_NAME:-"MySQL ${AGENT_HOST}"}
+AGENT_NAME=${AGENT_NAME:-"${AGENT_HOST}"}
 
 #
 # First, check all the mandatory environment variables
