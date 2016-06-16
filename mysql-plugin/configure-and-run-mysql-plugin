@@ -1,0 +1,86 @@
+#!/bin/sh
+
+root_dir=$(dirname $BASH_SOURCE[0])
+will_exit=0
+
+# Default the reported name based on monitored hostname
+AGENT_NAME=${AGENT_NAME:-"MySQL ${AGENT_HOST}"}
+
+#
+# First, check all the mandatory environment variables
+#
+for variable in \
+  NEWRELIC_LICENSE_KEY NEWRELIC_LOG_LEVEL \
+  AGENT_HOST AGENT_USER AGENT_PASSWD
+do
+  eval target=\$$variable
+  if [ -z "${target}" ]; then
+    echo "Must set $variable environment variable!"
+    will_exit=1
+  fi
+done
+
+if [ 0 -ne $will_exit ]; then
+  echo "Exiting"
+  exit $will_exit
+fi
+
+# Then create the config dir if needed
+mkdir -p "$root_dir/config/"
+
+#
+# and write the newrelic.json
+#
+cat > "$root_dir/config/newrelic.json" <<END_JSON
+{
+  "license_key": "${NEWRELIC_LICENSE_KEY}",
+END_JSON
+
+# Changing the endpoint is used internally at New Relic for development and testing
+[ -z "${NEWRELIC_ENDPOINT}" ] || cat >> "$root_dir/config/newrelic.json" <<END_JSON
+  "endpoint": "${NEWRELIC_ENDPOINT}",
+END_JSON
+
+cat >> "$root_dir/config/newrelic.json" <<END_JSON
+  "log_level": "${NEWRELIC_LOG_LEVEL}",
+  "log_file_name": "null",
+  "log_file_path": "/dev"
+}
+END_JSON
+
+#
+# Now write out the specific config for this plugin
+#
+cat > "$root_dir/config/plugin.json" <<END_JSON
+{
+  "agents": [
+    {
+END_JSON
+
+for variable in $(env | egrep ^AGENT_ | cut -f1 -d\=); do
+  eval value=\$$variable
+  eval key=$(echo $variable | cut -f2- -d\_ | tr A-Z a-z)
+  cat >> "$root_dir/config/plugin.json" <<END_JSON
+      "${key}": "${value}",
+END_JSON
+done
+
+cat >> "$root_dir/config/plugin.json" <<END_JSON
+    }
+  ]
+}
+END_JSON
+
+#
+# Nothing should need to write to the filesystem
+#
+chmod -R a-w .
+
+# A little bit of helpful debug output
+echo >&2
+echo "Gathering data from \"${AGENT_HOST}\"" >&2
+echo "Reporting as \"${AGENT_NAME}\"" >&2
+echo >&2
+
+# Run the Plugin
+exec java -Xmx128m -jar plugin.jar
