@@ -11,7 +11,7 @@ AGENT_NAME=${AGENT_NAME:-"MySQL ${AGENT_HOST}"}
 #
 for variable in \
   NEWRELIC_LICENSE_KEY NEWRELIC_LOG_LEVEL \
-  AGENT_HOST AGENT_USER AGENT_PASSWD
+  AGENT_HOST AGENT_USER
 do
   eval target=\$$variable
   if [ -z "${target}" ]; then
